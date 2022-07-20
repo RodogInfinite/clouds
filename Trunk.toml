@@ -1,5 +1,5 @@
-#[build]
-#release = true
+[build]
+release = false
 
 [serve]
 # The address to serve on.
