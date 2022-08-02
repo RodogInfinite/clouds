@@ -1,6 +1,5 @@
-use bevy::render::camera::Projection;
-use bevy::{prelude::*, render::view::NoFrustumCulling};
-use bevy::math::Vec2;
+use bevy::prelude::*;
+
 use crate::app::cameras::controller::orbit::{OrbitCameraBundle, OrbitCameraController};
 use crate::stages::extract::{InstanceData, InstanceMaterialData};
 use rand::Rng;
@@ -15,7 +14,7 @@ pub fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
         radius: 0.5,
         subdivisions: 2 // Stress test at some point
     };
-    info!("Generating {} quads", n*n); 
+    info!("Generating {} Icospheres", n*n); 
     commands.
         spawn()
         .insert_bundle(
@@ -50,21 +49,13 @@ pub fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
             )
             
         );
-    info!("Generated {} quads", n*n); 
+    info!("Generated {} Icospheres", n*n); 
     // camera
-    /*commands
-         .spawn_bundle(
-            Camera3dBundle {
-                transform: Transform::from_xyz(0.0, 0.0,  n)
-                .looking_at(Vec3::ZERO, Vec3::Y),
-                ..default()
-            }
-        );*/
-        commands
-        .spawn_bundle(Camera3dBundle::default())
-        .insert_bundle(OrbitCameraBundle::new(
-            OrbitCameraController::default(),
-            Vec3::new(-2.0, 5.0, 5.0),
-            Vec3::new(0., 0., 0.),
-        ));
+    commands
+    .spawn_bundle(Camera3dBundle::default())
+    .insert_bundle(OrbitCameraBundle::new(
+        OrbitCameraController::default(),
+        Vec3::new(-2.0, 5.0, 5.0),
+        Vec3::new(0., 0., 0.),
+    ));
 }
