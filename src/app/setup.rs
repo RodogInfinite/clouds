@@ -1,5 +1,7 @@
+use bevy::render::camera::Projection;
 use bevy::{prelude::*, render::view::NoFrustumCulling};
 use bevy::math::Vec2;
+use crate::app::cameras::controller::orbit::{OrbitCameraBundle, OrbitCameraController};
 use crate::stages::extract::{InstanceData, InstanceMaterialData};
 use rand::Rng;
 
@@ -44,18 +46,25 @@ pub fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
                 // instancing, and that is not taken into account with the built-in frustum culling.
                 // We must disable the built-in frustum culling by adding the `NoFrustumCulling` marker
                 // component to avoid incorrect culling.
-                NoFrustumCulling,
+                //NoFrustumCulling,
             )
             
         );
-        info!("Generated {} quads", n*n); 
-        // camera
+    info!("Generated {} quads", n*n); 
+    // camera
+    /*commands
+         .spawn_bundle(
+            Camera3dBundle {
+                transform: Transform::from_xyz(0.0, 0.0,  n)
+                .looking_at(Vec3::ZERO, Vec3::Y),
+                ..default()
+            }
+        );*/
         commands
-            .spawn_bundle(
-                Camera3dBundle {
-                    transform: Transform::from_xyz(0.0, 0.0,  n)
-                    .looking_at(Vec3::ZERO, Vec3::Y),
-                    ..default()
-                }
-            );
-        }
+        .spawn_bundle(Camera3dBundle::default())
+        .insert_bundle(OrbitCameraBundle::new(
+            OrbitCameraController::default(),
+            Vec3::new(-2.0, 5.0, 5.0),
+            Vec3::new(0., 0., 0.),
+        ));
+}
