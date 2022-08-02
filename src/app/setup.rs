@@ -8,7 +8,7 @@ pub fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
     let n = std::env::args()
         .nth(1)
         .and_then(|arg| arg.parse::<usize>().ok())
-        .unwrap_or(4000) as f32;
+        .unwrap_or(400) as f32;
     info!("Generating {} quads", n*n); 
     commands.
         spawn()
