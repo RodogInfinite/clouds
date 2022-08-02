@@ -9,15 +9,17 @@ pub fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
         .nth(1)
         .and_then(|arg| arg.parse::<usize>().ok())
         .unwrap_or(400) as f32;
+    let hexagon = shape::Icosphere{
+        radius: 0.5,
+        subdivisions: 2 // Stress test at some point
+    };
     info!("Generating {} quads", n*n); 
     commands.
         spawn()
         .insert_bundle(
             (meshes.add(
                 Mesh::from(
-                        shape::Quad { 
-                            size: Vec2::new(0.5,0.5),
-                            flip:false}
+                        hexagon
                         )
                     ),
                 Transform::from_xyz(0.0, 0.0, 0.0),
