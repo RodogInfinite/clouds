@@ -1,8 +1,13 @@
-use bevy::{prelude::{App, ClearColor, Color}, window::WindowDescriptor, DefaultPlugins, diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin}};
+use bevy::{
+    diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
+    prelude::{App, ClearColor, Color},
+    window::WindowDescriptor,
+    DefaultPlugins,
+};
 
 use crate::app::{setup::setup, staging::CustomMaterialPlugin};
 
-use super::cameras::{LookTransformPlugin, controller::orbit::OrbitCameraPlugin};
+use super::cameras::{controller::orbit::OrbitCameraPlugin, LookTransformPlugin};
 
 pub fn run() {
     App::new()

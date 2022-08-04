@@ -47,11 +47,7 @@ pub struct OrbitCameraBundle {
 }
 
 impl OrbitCameraBundle {
-    pub fn new(
-        controller: OrbitCameraController,
-        eye: Vec3,
-        target: Vec3,
-    ) -> Self {
+    pub fn new(controller: OrbitCameraController, eye: Vec3, target: Vec3) -> Self {
         // Make sure the transform is consistent with the controller to start.
         let transform = Transform::from_translation(eye).looking_at(target, Vec3::Y);
 
@@ -96,7 +92,6 @@ pub enum ControlEvent {
     Zoom(f32),
 }
 
-
 fn on_controller_enabled_changed(
     mut smoothers: Query<(&mut Smoother, &OrbitCameraController), Changed<OrbitCameraController>>,
 ) {
@@ -110,13 +105,10 @@ pub fn default_input_map(
     mut mouse_wheel_reader: EventReader<MouseWheel>,
     mut mouse_motion_events: EventReader<MouseMotion>,
     mouse_buttons: Res<Input<MouseButton>>,
-    keyboard: Res<Input<KeyCode>>,
     controllers: Query<&OrbitCameraController>,
 ) {
     // Can only control one camera at a time.
-    let controller = if let Some(controller) = controllers.iter().find(|c| {
-        c.enabled
-    }) {
+    let controller = if let Some(controller) = controllers.iter().find(|c| c.enabled) {
         controller
     } else {
         return;
@@ -162,40 +154,38 @@ pub fn control_system(
 ) {
     // Can only control one camera at a time.
     let (mut transform, scene_transform) =
-        if let Some((_, transform, scene_transform)) = cameras.iter_mut().find(|c| {
-            c.0.enabled
-        }) {
+        if let Some((_, transform, scene_transform)) = cameras.iter_mut().find(|c| c.0.enabled) {
             (transform, scene_transform)
         } else {
             return;
         };
 
-        let mut look_angles = LookAngles::from_vector(-transform.look_direction().unwrap());
-        let mut radius_scalar = 1.0;
+    let mut look_angles = LookAngles::from_vector(-transform.look_direction().unwrap());
+    let mut radius_scalar = 1.0;
 
-        for event in events.iter() {
-            match event {
-                ControlEvent::Orbit(delta) => {
-                    look_angles.add_yaw(-delta.x);
-                    look_angles.add_pitch(delta.y);
-                }
-                ControlEvent::TranslateTarget(delta) => {
-                    let right_dir = scene_transform.rotation * -Vec3::X;
-                    let up_dir = scene_transform.rotation * Vec3::Y;
-                    transform.target += delta.x * right_dir + delta.y * up_dir;
-                }
-                ControlEvent::Zoom(scalar) => {
-                    radius_scalar *= scalar;
-                }
+    for event in events.iter() {
+        match event {
+            ControlEvent::Orbit(delta) => {
+                look_angles.add_yaw(-delta.x);
+                look_angles.add_pitch(delta.y);
+            }
+            ControlEvent::TranslateTarget(delta) => {
+                let right_dir = scene_transform.rotation * -Vec3::X;
+                let up_dir = scene_transform.rotation * Vec3::Y;
+                transform.target += delta.x * right_dir + delta.y * up_dir;
+            }
+            ControlEvent::Zoom(scalar) => {
+                radius_scalar *= scalar;
             }
         }
+    }
 
-        look_angles.assert_not_looking_up();
+    look_angles.assert_not_looking_up();
 
-        let new_radius = (radius_scalar * transform.radius())
-            .min(1000000.0)
-            .max(0.001);
-        transform.eye = transform.target + new_radius * look_angles.unit_vector();
+    let new_radius = (radius_scalar * transform.radius())
+        .min(1000000.0)
+        .max(0.001);
+    transform.eye = transform.target + new_radius * look_angles.unit_vector();
 }
 
 /*
@@ -219,5 +209,5 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE. 
+SOFTWARE.
 */

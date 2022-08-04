@@ -1,12 +1,10 @@
 use bevy::{
     core_pipeline::core_3d::Opaque3d,
-    pbr::{MeshPipelineKey, MeshUniform,},
+    pbr::{MeshPipelineKey, MeshUniform},
     prelude::*,
     render::{
         render_asset::RenderAssets,
-        render_phase::{
-            DrawFunctions, RenderPhase,
-        },
+        render_phase::{DrawFunctions, RenderPhase},
         render_resource::*,
         view::{ExtractedView, Msaa},
     },
@@ -14,7 +12,7 @@ use bevy::{
 
 use crate::stages::extract::InstanceMaterialData;
 
-use super::{pipeline::CustomPipeline, draw::DrawCustom};
+use super::{draw::DrawCustom, pipeline::CustomPipeline};
 
 #[allow(clippy::too_many_arguments)]
 pub fn queue_custom(
@@ -53,4 +51,3 @@ pub fn queue_custom(
         }
     }
 }
-

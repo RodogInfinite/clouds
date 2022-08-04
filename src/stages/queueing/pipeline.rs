@@ -1,10 +1,7 @@
 use bevy::{
     pbr::{MeshPipeline, MeshPipelineKey},
     prelude::*,
-    render::{
-        mesh::{MeshVertexBufferLayout},
-        render_resource::*,
-    },
+    render::{mesh::MeshVertexBufferLayout, render_resource::*},
 };
 
 use crate::stages::extract::InstanceData;
@@ -60,6 +57,7 @@ impl SpecializedMeshPipeline for CustomPipeline {
             self.mesh_pipeline.view_layout.clone(),
             self.mesh_pipeline.mesh_layout.clone(),
         ]);
+        descriptor.primitive.cull_mode = Some(Face::Back);
 
         Ok(descriptor)
     }

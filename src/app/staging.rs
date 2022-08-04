@@ -10,7 +10,7 @@ use bevy::{
 use crate::stages::{
     extract::InstanceMaterialData,
     prepare::prepare_instance_buffers,
-    queueing::{pipeline::CustomPipeline, draw::DrawCustom, queue::queue_custom},
+    queueing::{draw::DrawCustom, pipeline::CustomPipeline, queue::queue_custom},
 };
 
 pub struct CustomMaterialPlugin;

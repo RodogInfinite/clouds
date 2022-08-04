@@ -6,14 +6,12 @@ use bevy::{
         mesh::GpuBufferInfo,
         render_asset::RenderAssets,
         render_phase::{
-            EntityRenderCommand, RenderCommandResult,  SetItemPipeline,
-            TrackedRenderPass,
+            EntityRenderCommand, RenderCommandResult, SetItemPipeline, TrackedRenderPass,
         },
     },
 };
 
 use crate::InstanceBuffer;
-
 
 pub type DrawCustom = (
     SetItemPipeline,
