@@ -26,7 +26,7 @@ pub fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
                     position: Vec3::new(
                         x * n - n / 2.0,
                         y * n - n / 2.0,
-                        rng.gen_range(-n / 2.0 ..= n / 2.0),
+                        rng.gen_range(-n / 2.0..=n / 2.0),
                     ),
                     scale: 1.0,
                     color: Color::hsla(x * 360., y, 0.5, 1.0).as_rgba_f32(),
