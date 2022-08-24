@@ -13,9 +13,9 @@ use crate::stages::{
     queueing::{draw::DrawCustom, pipeline::CustomPipeline, queue::queue_custom},
 };
 
-pub struct CustomMaterialPlugin;
+pub struct PointCloudPlugin;
 
-impl Plugin for CustomMaterialPlugin {
+impl Plugin for PointCloudPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugin(ExtractComponentPlugin::<InstanceMaterialData>::default());
         app.sub_app_mut(RenderApp)

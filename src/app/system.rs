@@ -5,9 +5,9 @@ use bevy::{
     DefaultPlugins,
 };
 
-use crate::app::{setup::setup, staging::CustomMaterialPlugin};
+use crate::app::{setup::setup, staging::PointCloudPlugin};
 
-use super::cameras::{controller::orbit::OrbitCameraPlugin, LookTransformPlugin};
+use cameras::{controller::orbit::OrbitCameraPlugin, LookTransformPlugin};
 
 pub fn run() {
     App::new()
@@ -18,7 +18,7 @@ pub fn run() {
         })
         .insert_resource(ClearColor(Color::rgb(0.0, 0.0, 0.0))) // Background Color
         .add_plugins(DefaultPlugins)
-        .add_plugin(CustomMaterialPlugin)
+        .add_plugin(PointCloudPlugin)
         .add_plugin(FrameTimeDiagnosticsPlugin)
         .add_plugin(LogDiagnosticsPlugin::default())
         // Enables the system that synchronizes your `Transform`s and `LookTransform`s.

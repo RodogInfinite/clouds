@@ -11,3 +11,4 @@ bytemuck = "1.9.1"
 rand = "0.8.5"
 approx = "0.4"
 serde = "1.0"
+cameras = {path="../cameras"}

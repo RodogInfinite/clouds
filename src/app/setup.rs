@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::app::cameras::controller::orbit::{OrbitCameraBundle, OrbitCameraController};
+use cameras::controller::orbit::{OrbitCameraBundle, OrbitCameraController};
 use crate::stages::extract::{InstanceData, InstanceMaterialData};
 use rand::Rng;
 
@@ -9,7 +9,7 @@ pub fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
     let n = std::env::args()
         .nth(1)
         .and_then(|arg| arg.parse::<usize>().ok())
-        .unwrap_or(1000) as f32;
+        .unwrap_or(100) as f32;
     let sphere = shape::Icosphere {
         radius: 0.5,
         subdivisions: 1, // Stress test at some point
